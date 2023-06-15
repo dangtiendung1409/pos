@@ -24,11 +24,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import java.util.Optional;
 import javafx.scene.image.Image;
+import javafx.application.Platform;
+
 
 
 
@@ -72,7 +75,6 @@ public class HomeController implements Initializable {
     @FXML
     private TableColumn<Table, String> colDelete;
     private static Table selectedTable;
-
 
 
     private ObservableList<Table> list = FXCollections.observableArrayList();
@@ -150,7 +152,6 @@ public class HomeController implements Initializable {
     }
 
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -158,7 +159,6 @@ public class HomeController implements Initializable {
         colTotalPrice.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
         tbv.setOnMouseClicked(this::editTableRow);
         totalTextField.setText("0.00");
-
 
 
         colPrice.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPrice()).asObject());
@@ -274,6 +274,7 @@ public class HomeController implements Initializable {
         addToTable(mouseEvent, "kish", qty9, 1);
 
     }
+
     private void calculateTotalPrice() {
         double totalPrice = 0;
         for (Table table : list) {
@@ -333,6 +334,37 @@ public class HomeController implements Initializable {
         }
     }
 
+
+    public void Exit(ActionEvent actionEvent) {
+        // Đóng cửa sổ hiện tại
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.close();
+
+        // Mở trang login.fxml
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("../views/login.fxml"));
+            Stage loginStage = new Stage();
+            loginStage.setScene(new Scene(root));
+            loginStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void Cancelorder(ActionEvent actionEvent) {
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.setTitle("Xác nhận hủy đơn hàng");
+        confirmationAlert.setHeaderText(null);
+        confirmationAlert.setContentText("Bạn có chắc chắn muốn hủy đơn hàng và xóa tất cả các sản phẩm đã thêm?");
+
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            list.clear();
+            tbv.refresh();
+            updateTotalProduct();
+            calculateTotalPrice();
+        }
+    }
 
 
 }

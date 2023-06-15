@@ -229,12 +229,12 @@
 
       <Pane layoutY="757.0" prefHeight="45.0" prefWidth="1440.0" style="-fx-background-color: #d3d3d3; -fx-border-color: white;">
          <children>
-            <Button layoutX="385.0" layoutY="1.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="261.0" style="-fx-background-color: white; -fx-background-radius: 10;" text="Cancel order">
+            <Button onAction="#Cancelorder" layoutX="385.0" layoutY="1.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="261.0" style="-fx-background-color: white; -fx-background-radius: 10;" text="Cancel order">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button layoutX="1142.0" layoutY="3.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="261.0" style="-fx-background-color: red; -fx-background-radius: 10;" text="Exit" textFill="WHITE">
+            <Button onAction="#Exit"  layoutX="1142.0" layoutY="3.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="261.0" style="-fx-background-color: red; -fx-background-radius: 10;" text="Exit" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
